@@ -47,7 +47,7 @@ Example program
 import b2k_ws2812_spi
 import time
 
-#sets number in ws2812 strip
+#sets number of pixel in ws2812 strip
 b2k_ws2812_spi.setNumPixels(6)
 
 #set 1st pixel color to red
