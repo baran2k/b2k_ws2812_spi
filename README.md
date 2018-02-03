@@ -47,6 +47,7 @@ Example program
 import b2k_ws2812_spi
 import time
 
+#sets number in ws2812 strip
 b2k_ws2812_spi.setNumPixels(6)
 
 #set 1st pixel color to red
@@ -74,5 +75,3 @@ b2k_ws2812_spi.setAll(0,0,0)
 #ligth strip
 b2k_ws2812_spi.show()
 ```
-
-* NOTE: `this module use the GRB model! not the RGB`
