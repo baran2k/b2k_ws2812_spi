@@ -19,20 +19,24 @@ Connections to the WS2812:
 ```
 GND   --   GND one of pin 6, 9, 14, 20, 25 (30, 34, 39)
 DIN   --   MOSI (Pin 19)
-VCC   --   5V DON'T CONNECT POWER TO RPi!! USE POWER SUPPLY!!!
+VCC   --   5V DON'T CONNECT POWER TO RPi (OPi)!! USE POWER SUPPLY!!!
 ```
 Usage
 -----
 ```
-b2k_ws2812_spi.write(spi, [[GREEN,RED,BLUE], [GREEN,RED,BLUE], [GREEN,RED,BLUE]])
-                                   ^                ^                   ^
-                                first led       second led          third led
-                                
-RED, GREEN, BLUE - must be in range of 0x00 - 0xFF 
-	where 	0x00 - no light
-		0xFF - max light brightness
+* b2k_ws2812_spi.setNumPixels(number of pixels) - sets number of pixels in ws2812
+  * b2k_ws2812_spi.setNumPixels() - without parameters returns the number of sets pixels
 
-NOTE: this module use the GRB model! not the RGB
+* b2k_ws2812_spi.setPixel(number pixel, RED, GREEN, BLUE) - set pixel to color in rgb
+  * RED, GREEN, BLUE - must be in range of 0-255
+    where:
+        0 - no light
+        255 - max light brightness
+        
+* b2k_ws2812_spi.setAll(RED,GREEN,BLUE) - same as before, but sets ALL pixel to color rgb
+
+* b2k_ws2812_spi.show() - light the ws2812 strip
+                                
 ```
 
 Example program
@@ -40,55 +44,35 @@ Example program
 
 ```
 #!/usr/bin/python
-import spidev
 import b2k_ws2812_spi
 import time
-import random
-spi = spidev.SpiDev()
-spi.open(0,0)
 
-#number led of pixel strip
-numPixels = 10
-#init range for pixel count
-pixel = []
-for i in range(numPixels):
-    pixel.append([0x00,0x00,0x00])	
-		
-for i in range(3):
-    for i in range(numPixels):
-        #set pixel color to red
-        pixel[i]=[0x00,0x15,0x00]
-        #light strip
-        b2k_ws2812_spi.write(spi, pixel)
-        time.sleep(0.08)
-    for i in range(numPixels):
-        #set pixel color to green
-        pixel[i]=[0x15,0x00,0x00]
-        #light strip
-        b2k_ws2812_spi.write(spi, pixel)
-        time.sleep(0.08)	
-    for i in range(numPixels):
-        #set pixel color to blue
-        pixel[i]=[0x00,0x00,0x15]
-        #light strip
-        b2k_ws2812_spi.write(spi, pixel)
-        time.sleep(0.08)
-    for i in range(numPixels):
-        #set pixel color to orange
-        pixel[i]=[0x14,0x15,0x00]
-        #light strip
-        b2k_ws2812_spi.write(spi, pixel)
-        time.sleep(0.08)
-    for i in range(numPixels):
-        #set pixel color to yellow
-        pixel[i]=[0x15,0x15,0x00]
-        #light strip
-        b2k_ws2812_spi.write(spi, pixel)
-        time.sleep(0.08) 
-        
-for i in range(numPixels):
-    pixel[i] = [0x00,0x00,0x00]
-    b2k_ws2812_spi.write(spi, pixel)
+b2k_ws2812_spi.setNumPixels(6)
+
+#set 1st pixel color to red
+b2k_ws2812_spi.setPixel(0,50,0,0)
+#set 2nd pixel color to green
+b2k_ws2812_spi.setPixel(1,0,50,0)
+#set 3rd pixel color to blue
+b2k_ws2812_spi.setPixel(2,0,0,50)
+#set 4th pixel color to orange
+b2k_ws2812_spi.setPixel(3,50,30,0)
+#set 5th pixel color to white
+b2k_ws2812_spi.setPixel(4,50,50,50)
+#set 6th pixel color to yellow
+b2k_ws2812_spi.setPixel(5,50,50,0)
+#light strip
+b2k_ws2812_spi.show()
+time.sleep(2)
+#set all pixel color to red
+b2k_ws2812_spi.setAll(50,0,0)
+#ligth strip
+b2k_ws2812_spi.show()
+time.sleep(2)
+#turn of all pixels
+b2k_ws2812_spi.setAll(0,0,0)
+#ligth strip
+b2k_ws2812_spi.show()
 ```
 
 * NOTE: `this module use the GRB model! not the RGB`

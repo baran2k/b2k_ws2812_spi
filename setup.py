@@ -13,7 +13,7 @@ classifiers = ['Development Status :: 4 - Beta',
                'Topic :: System :: Hardware :: Hardware Drivers']
 
 setup(	name		= "b2k_ws2812_spi",
-	version		= "0.1",
+	version		= "0.2",
 	description	= "Python bindings for WS2812 communication over SPI.MOSI",
 	long_description= open('README.md').read() + "\n" + open('CHANGELOG.md').read(),
 	author		= "baran2k",
